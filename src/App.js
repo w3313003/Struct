@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import './struct/Dictionary';
+import './struct/HashTable';
 
 class App extends Component {
   render() {
