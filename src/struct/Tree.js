@@ -59,12 +59,42 @@ class BinaryTree {
 		//返回二叉树对象
 		return this.root;
 	}
-	// 先序遍历
-
+	// 先序遍历 根 -> 左 -> 右
+	preOrderTraverse(fn) {
+		function preOrderTraverseNode(node, callback) {
+			if(node !== null) {
+				callback(node.key);
+				preOrderTraverseNode(node.left, callback);
+				preOrderTraverseNode(node.right, callback);
+			}
+		}
+        preOrderTraverseNode(this.root, fn)
+	}
+	//  中序遍历 左 -> 根 -> 右
+	inOrderTraverse(fn) {
+		function inOrderTraverse(node, callback) {
+			//  node 为null 退出递归
+			if(node !== null) {
+				inOrderTraverse(node.left, callback);
+				callback(node.key);
+				inOrderTraverse(node.right, callback);
+			}
+		};
+		inOrderTraverse(this.root, fn)
+	}
+	//  后序遍历 左 -> 右 -> 根
+	postOrderTraverse(fn) {
+		function postOrderTraverse(node, callback) {
+			postOrderTraverse(node.left, callback);
+			postOrderTraverse(node.right, callback);
+			callback(node.key)
+		};
+		postOrderTraverse(this.root, fn);
+	}
 }
 var tree = new BinaryTree([8,3,6,4,9,11,2,5,7]);
 
-
-console.log(tree.showTree())
+console.log(tree.showTree());
+console.log(tree.inOrderTraverse(x => console.log(x)));
 
 
