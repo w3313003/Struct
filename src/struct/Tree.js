@@ -91,10 +91,17 @@ class BinaryTree {
 		};
 		postOrderTraverse(this.root, fn);
 	}
+	getMin() {
+		let node = this.root;
+		if(node){
+			while(node && node.left !== null) {
+				node = node.left;
+			};
+			return node.key
+		}
+	}
 }
 var tree = new BinaryTree([8,3,6,4,9,11,2,5,7]);
 
 console.log(tree.showTree());
-console.log(tree.inOrderTraverse(x => console.log(x)));
-
-
+console.log(tree.getMin());
