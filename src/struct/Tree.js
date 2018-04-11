@@ -62,19 +62,19 @@ class BinaryTree {
 	// 先序遍历 根 -> 左 -> 右
 	preOrderTraverse(fn) {
 		function preOrderTraverseNode(node, callback) {
-			if(node !== null) {
+			if (node !== null) {
 				callback(node.key);
 				preOrderTraverseNode(node.left, callback);
 				preOrderTraverseNode(node.right, callback);
 			}
 		}
-        preOrderTraverseNode(this.root, fn)
+		preOrderTraverseNode(this.root, fn)
 	}
 	//  中序遍历 左 -> 根 -> 右
 	inOrderTraverse(fn) {
 		function inOrderTraverse(node, callback) {
 			//  node 为null 退出递归
-			if(node !== null) {
+			if (node !== null) {
 				inOrderTraverse(node.left, callback);
 				callback(node.key);
 				inOrderTraverse(node.right, callback);
@@ -93,15 +93,70 @@ class BinaryTree {
 	}
 	getMin() {
 		let node = this.root;
-		if(node){
-			while(node && node.left !== null) {
+		if (node) {
+			while (node && node.left !== null) {
 				node = node.left;
 			};
 			return node.key
 		}
 	}
+	getMax() {
+		let node = this.root;
+		if (node) {
+			while (node && node.right !== null) {
+				node = node.right
+			};
+			return node.key
+		};
+	}
+	search(key) {
+		const searchNode = (node, key) => {
+			if (node === null) {
+				return false;
+			};
+			if (node.key > key) {
+				return searchNode(node.left, key)
+			} else if (node.key < key) {
+				return searchNode(node.right, key)
+			} else {
+				return true
+			}
+		};
+		return searchNode(this.root, key)
+	}
+	remove(key) {
+		const findMinNode = (node = this.root, key) => {
+			let nodes = node; 
+			if (nodes) {
+				while (nodes && nodes.left !== null) {
+					nodes = node.left;
+				}
+				return nodes;
+			}
+			return null;
+		};
+		const removeNode = (node, key) => {
+			if (node === null) {
+				return null;
+			}
+			if (key < node.key) {
+				node.left = removeNode(node.left, key);
+				return node;
+			} else if (key > node.key) {
+				node.right = removeNode(node.right, key);
+				return node
+			} else {
+				if (node.left === null && node.right === null) {
+					node = null;
+					return node;
+				}
+			}
+		};
+		this.root = removeNode(this.root, key)
+	}
 }
-var tree = new BinaryTree([8,3,6,4,9,11,2,5,7]);
+var tree = new BinaryTree([8, 3, 6, 12, 4, 9, 11, 25, 2, 5, 7]);
 
 console.log(tree.showTree());
 console.log(tree.getMin());
+console.log(tree.search(12));
